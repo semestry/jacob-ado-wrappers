@@ -1,0 +1,35 @@
+apply plugin: 'java'
+apply plugin: 'maven-publish'
+
+group = 'net.sf.jacob-project'
+version = '1.0'
+
+repositories {
+    maven {
+        url "https://maven.eveoh.nl/content/groups/public"
+    }
+}
+
+dependencies {
+    compile 'net.sf.jacob-project:jacob:1.15-M4'    
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            url "https://maven.eveoh.nl/content/repositories/releases"
+            if (project.hasProperty('mavenUser')) {
+                credentials {
+                    username mavenUser
+                    password mavenPass
+                }
+            }
+        }
+    }
+}
+
